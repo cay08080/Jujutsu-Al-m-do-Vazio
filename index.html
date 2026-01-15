@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujutsu: Além do Vazio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cursed-purple: #a855f7;
+            --cursed-blue: #3b82f6;
+            --cursed-red: #ef4444;
+            --bg-dark: #050508;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Scanlines */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 1000;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .cursed-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #110c1f 0%, #050508 100%);
+            z-index: -1;
+        }
+
+        .font-bungee { font-family: 'Bungee', cursive; }
+        .font-marker { font-family: 'Permanent Marker', cursive; }
+
+        .glass-panel {
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes message-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-message { animation: message-in 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+        /* Kokusen Impacto Total */
+        @keyframes kokusen-total {
+            0% { filter: invert(0) contrast(1); transform: scale(1); }
+            5% { filter: invert(1) contrast(5) brightness(2); transform: scale(1.1) rotate(1deg); }
+            10% { filter: invert(0) contrast(2) brightness(1.5); transform: scale(1.05) rotate(-1deg); }
+            15% { transform: translate(10px, -10px); }
+            20% { transform: translate(-10px, 10px); }
+            100% { filter: none; transform: scale(1); }
+        }
+        .kokusen-active { animation: kokusen-total 0.8s ease-out; }
+
+        @keyframes screen-shake {
+            0% { transform: translate(1px, 1px); }
+            25% { transform: translate(-2px, -3px); }
+            50% { transform: translate(3px, 2px); }
+            75% { transform: translate(-1px, 1px); }
+            100% { transform: translate(0, 0); }
+        }
+        .shake { animation: screen-shake 0.1s infinite; }
+
+        @keyframes bar-low-pulse {
+            0%, 100% { opacity: 1; filter: brightness(1); }
+            50% { opacity: 0.6; filter: brightness(1.5) drop-shadow(0 0 5px currentColor); }
+        }
+        .animate-critical { animation: bar-low-pulse 0.4s infinite ease-in-out; }
+
+        @keyframes levelup-glow {
+            0% { box-shadow: 0 0 0px rgba(168, 85, 247, 0); border-color: rgba(168, 85, 247, 0.2); }
+            50% { box-shadow: 0 0 50px rgba(168, 85, 247, 0.8); border-color: #a855f7; }
+            100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); border-color: rgba(168, 85, 247, 0.5); }
+        }
+        .animate-levelup-panel { animation: levelup-glow 2s infinite ease-in-out; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .bar-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            height: 10px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .bar-fill {
+            height: 100%;
+            transition: width 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+            position: relative;
+            z-index: 2;
+        }
+        .bar-ghost {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+            z-index: 1;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div class="cursed-bg"></div>
+    <div id="root"></div>
+</body>
+</html>
